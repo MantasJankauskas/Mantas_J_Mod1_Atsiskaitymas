@@ -1,7 +1,7 @@
-import requests
 from lxml.etree import HTML
+from selenium import webdriver
 
-def crawl(source: str = 'eurovaistine', timeout: int = 60, return_format:str = 'json'):
+def crawl(source: str = 'eurovaistine', timeout: int = 60, return_format: str = 'json'):
     match source:
         case 'eurovaistine':
             response_data = __get_web_data_as_text('https://www.eurovaistine.lt/vaistai-nereceptiniai', timeout)
@@ -14,9 +14,14 @@ def crawl(source: str = 'eurovaistine', timeout: int = 60, return_format:str = '
         case _:
             raise ValueError
 
+
 def __get_web_data_as_text(url: str, response_timeout: int) -> HTML:
-    response = requests.get(url, timeout=response_timeout)
-    return HTML(response.text)
+    driver = webdriver.Chrome()
+    driver.get(url)
+    driver.implicitly_wait(response_timeout)
+    html_content = driver.page_source
+    return HTML(html_content)
+
 
 def __parse_eurovaistine_data(data: HTML):
     return data
