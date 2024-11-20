@@ -7,10 +7,10 @@ def crawl(source: str = 'eurovaistine', timeout: int = 60, return_format: str = 
             response_data = __get_web_data_as_text('https://www.eurovaistine.lt/vaistai-nereceptiniai', timeout)
             data = __parse_eurovaistine_data(response_data)
             return data
-        case 'benu':
-            response_data = __get_web_data_as_text('https://www.benu.lt/gydymas-ir-profilaktika', timeout)
-            data = __parse_benu_data(response_data)
-            return None
+        case 'apotheka':
+            response_data = __get_web_data_as_text('https://www.apotheka.lt/prekes/nereceptiniai-vaistai', timeout)
+            data = __parse_apotheka_data(response_data)
+            return data
         case _:
             raise ValueError
 
@@ -33,5 +33,12 @@ def __parse_eurovaistine_data(data: HTML) -> list[dict[str, str | bool]]:
     } for drug in drugs_cards]
 
 
-def __parse_benu_data(data: HTML):
-    return data
+def __parse_apotheka_data(data: HTML):
+    drugs_cards = data.xpath("//div[@class='box-product']")
+
+    return [{
+        'title': ''.join(drug.xpath(".//div[@class='box-product__title']/text()")).strip(),
+        'discounted': bool(
+            drug.xpath(".//div[contains(@class, 'discountContainer')]//div[contains(@class, 'discount')]/text()")),
+        'price': ''.join(drug.xpath(".//span[@class='product-pricing__price-number']/text()")).strip()[:-2]
+    } for drug in drugs_cards]
