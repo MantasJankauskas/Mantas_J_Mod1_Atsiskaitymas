@@ -1,6 +1,7 @@
 import requests
+from lxml.etree import HTML
 
-def crawl(source = 'eurovaistine', timeout = 60, return_format = 'json'):
+def crawl(source: str = 'eurovaistine', timeout: int = 60, return_format:str = 'json'):
     match source:
         case 'eurovaistine':
             response_data = __get_web_data_as_text('https://www.eurovaistine.lt/vaistai-nereceptiniai', timeout)
@@ -13,12 +14,12 @@ def crawl(source = 'eurovaistine', timeout = 60, return_format = 'json'):
         case _:
             raise ValueError
 
-def __get_web_data_as_text(url, response_timeout):
+def __get_web_data_as_text(url: str, response_timeout: int) -> HTML:
     response = requests.get(url, timeout=response_timeout)
-    return response.text
+    return HTML(response.text)
 
-def __parse_eurovaistine_data(data):
+def __parse_eurovaistine_data(data: HTML):
     return data
 
-def __parse_benu_data(data):
+def __parse_benu_data(data: HTML):
     return data
