@@ -8,7 +8,7 @@ def crawl(source = 'eurovaistine', timeout = 60, return_format = 'json'):
             return None
         case 'benu':
             response_data = __get_web_data_as_text('https://www.benu.lt/gydymas-ir-profilaktika', timeout)
-            data = parse_benu_data(response_data)
+            data = __parse_benu_data(response_data)
             return None
         case _:
             raise ValueError
@@ -20,5 +20,5 @@ def __get_web_data_as_text(url, response_timeout):
 def __parse_eurovaistine_data(data):
     return data
 
-def parse_benu_data(data):
+def __parse_benu_data(data):
     return data
