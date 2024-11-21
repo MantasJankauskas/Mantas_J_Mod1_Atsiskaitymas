@@ -54,3 +54,28 @@ class TestDataParser(unittest.TestCase):
             'price': '10,99'
         }]
         self.assertEqual(data, expected_data)
+
+    @patch('mantas_j_mod1_atsiskaitymas.crawler.webdriver.Chrome')
+    def test_get_web_data_apotheka(self, mock_webdriver):
+        mock_driver = MagicMock()
+        mock_webdriver.return_value = mock_driver
+        mock_driver.page_source = """
+        <html>
+            <div class="box-product">
+                <div class="box-product__title">Testing</div>
+                <div class="box-product__image"><img src="image_url.jpg"/></div>
+                <div class="discountContainer"><div class="discount">10</div></div>
+                <span class="product-pricing__price-number">10,99 €</span>
+            </div>
+        </html>
+        """
+        crawler = Crawl('apotheka')
+        data = crawler.get_web_data()
+
+        expected_data = [{
+            'title': 'Testing',
+            'img_url': ['image_url.jpg'],
+            'discounted': True,
+            'price': '10,99'
+        }]
+        self.assertEqual(data, expected_data)
