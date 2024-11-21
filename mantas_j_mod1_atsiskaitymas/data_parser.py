@@ -3,7 +3,7 @@ import io
 import csv
 
 class DataParser:
-    accepted_formats = {'json', 'csv'}
+    accepted_formats = {'json', 'csv', 'list'}
     data_to_parse = None
 
     def __validate_format(self, return_format):
@@ -18,6 +18,8 @@ class DataParser:
                 return self.__return_json_format()
             case 'csv':
                 return self.__return_csv_format()
+            case 'list':
+                return self.data_to_parse
 
     def __return_json_format(self):
         return json.dumps(self.data_to_parse)
