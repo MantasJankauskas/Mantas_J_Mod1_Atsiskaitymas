@@ -13,6 +13,7 @@ class DataParser:
     def return_in_format(self, data: list, return_format: str = 'json'):
         self.__validate_format(return_format)
         self.data_to_parse = data
+
         match return_format:
             case 'json':
                 return self.__return_json_format()
@@ -28,7 +29,7 @@ class DataParser:
         output = io.StringIO()
         headers = self.data_to_parse[0].keys()
 
-        writer = csv.DictWriter(output, fieldnames=headers)
+        writer = csv.DictWriter(output, fieldnames=headers, lineterminator="\n")
 
         writer.writeheader()
         writer.writerows(self.data_to_parse)
