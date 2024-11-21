@@ -28,3 +28,29 @@ class TestDataParser(unittest.TestCase):
         self.assertEqual(result.xpath("//title/text()")[0], "Test")
 
         mock_driver.get.assert_called_once_with("https://example.com")
+
+    @patch('mantas_j_mod1_atsiskaitymas.crawler.webdriver.Chrome')
+    def test_get_web_data_eurovaistine(self, mock_webdriver):
+        mock_driver = MagicMock()
+        mock_webdriver.return_value = mock_driver
+        mock_driver.page_source = """
+        <html>
+            <a class="productCard">
+                <div class="title"><span>Test</span></div>
+                <div class="image"><img src="image_url_a.jpg"/></div>
+                <div class="discountContainer"><div class="discount">10</div></div>
+                <div class="productPrice"><span>10,99 €</span></div>
+            </a>
+        </html>
+        """
+        crawler = Crawl('eurovaistine')
+        data = crawler.get_web_data()
+
+        # Expected parsed data
+        expected_data = [{
+            'title': 'Test',
+            'img_url': ['image_url_a.jpg'],
+            'discounted': True,
+            'price': '10,99'
+        }]
+        self.assertEqual(data, expected_data)
