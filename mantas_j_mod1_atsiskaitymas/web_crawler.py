@@ -7,13 +7,13 @@ def crawl(source: str = 'eurovaistine', timeout: int = 60, return_format: str = 
         case 'eurovaistine':
             response_data = __get_web_data_as_text('https://www.eurovaistine.lt/vaistai-nereceptiniai', timeout)
             data = __parse_eurovaistine_data(response_data)
-            DataParser(return_format)
-            return data
+            parsed_data = DataParser().return_in_format(data, return_format)
+            return parsed_data
         case 'apotheka':
             response_data = __get_web_data_as_text('https://www.apotheka.lt/prekes/nereceptiniai-vaistai', timeout)
             data = __parse_apotheka_data(response_data)
-            DataParser(return_format)
-            return data
+            parsed_data = DataParser().return_in_format(data, return_format)
+            return parsed_data
         case _:
             raise ValueError(f"Invalid source: '{source}'.")
 
