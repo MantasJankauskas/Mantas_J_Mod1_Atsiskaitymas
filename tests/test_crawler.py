@@ -23,7 +23,8 @@ class TestDataParser(unittest.TestCase):
         mock_chrome.return_value = mock_driver
 
         instance = Crawl('eurovaistine')
-        result = instance._Crawl__get_web_data_as_text("https://example.com", 10)
+        result = instance._Crawl__get_web_data_as_text(
+            "https://example.com", 10)
 
         self.assertEqual(result.xpath("//title/text()")[0], "Test")
 
