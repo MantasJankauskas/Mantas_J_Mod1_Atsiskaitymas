@@ -28,6 +28,7 @@ def __parse_eurovaistine_data(data: HTML) -> list[dict[str, str | bool]]:
 
     return [{
         'title': ''.join(drug.xpath(".//div[@class='title']/span/text()")).strip(),
+        'img_url': drug.xpath(".//div[contains(@class, 'image')]//img/@src"),
         'discounted': bool(drug.xpath(".//div[contains(@class, 'discountContainer')]//div[contains(@class, 'discount')]/text()")),
         'price': ''.join(drug.xpath(".//div[contains(@class, 'productPrice')]/span/text()")).strip()[:-2]
     } for drug in drugs_cards]
@@ -38,7 +39,7 @@ def __parse_apotheka_data(data: HTML):
 
     return [{
         'title': ''.join(drug.xpath(".//div[@class='box-product__title']/text()")).strip(),
-        'discounted': bool(
-            drug.xpath(".//div[contains(@class, 'discountContainer')]//div[contains(@class, 'discount')]/text()")),
+        'img_url': drug.xpath(".//div[contains(@class, 'box-product__image')]//img/@src"),
+        'discounted': bool(drug.xpath(".//div[contains(@class, 'discountContainer')]//div[contains(@class, 'discount')]/text()")),
         'price': ''.join(drug.xpath(".//span[@class='product-pricing__price-number']/text()")).strip()[:-2]
     } for drug in drugs_cards]
