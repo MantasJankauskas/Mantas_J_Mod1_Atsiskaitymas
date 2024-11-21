@@ -2,6 +2,7 @@ import unittest
 import json
 from mantas_j_mod1_atsiskaitymas.data_parser import DataParser
 
+
 class TestDataParser(unittest.TestCase):
     def test_validate_format_invalid_value(self):
         parser = DataParser()

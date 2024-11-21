@@ -2,13 +2,15 @@ import json
 import io
 import csv
 
+
 class DataParser:
     accepted_formats = {'json', 'csv', 'list'}
     data_to_parse = None
 
     def __validate_format(self, return_format):
         if return_format not in self.accepted_formats:
-            raise ValueError(f"Invalid return_format: '{return_format}'. Accepted formats are: {self.accepted_formats}")
+            raise ValueError(
+                f"Invalid return_format: '{return_format}'. Accepted formats are: {self.accepted_formats}")
 
     def return_in_format(self, data: list, return_format: str = 'json'):
         self.__validate_format(return_format)
@@ -29,7 +31,8 @@ class DataParser:
         output = io.StringIO()
         headers = self.data_to_parse[0].keys()
 
-        writer = csv.DictWriter(output, fieldnames=headers, lineterminator="\n")
+        writer = csv.DictWriter(
+            output, fieldnames=headers, lineterminator="\n")
 
         writer.writeheader()
         writer.writerows(self.data_to_parse)
