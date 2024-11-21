@@ -29,7 +29,7 @@ class TestDataParser(unittest.TestCase):
 
         self.assertEqual(json.dumps(data), result)
 
-    def test_return_in_format_json(self):
+    def test_return_in_format_csv(self):
         data = [{"id": 1, "title": 'Test'}]
         result = DataParser().return_in_format(data, 'csv')
 
