@@ -3,12 +3,12 @@ from selenium import webdriver
 
 
 class Crawl:
-    accepted_formats = {'eurovaistine', 'apotheka'}
+    accepted_sources = {'eurovaistine', 'apotheka'}
 
-    def __init__(self, source, timeout):
+    def __init__(self, source, timeout = 60):
         self.source = source
         self.timeout = timeout
-        self.__validate_format()
+        self.__validate_source()
 
     def get_web_data(self):
         match self.source:
@@ -19,9 +19,9 @@ class Crawl:
                 response_data = self.__get_web_data_as_text('https://www.apotheka.lt/prekes/nereceptiniai-vaistai', self.timeout)
                 return self.__parse_apotheka_data(response_data)
 
-    def __validate_format(self):
-        if self.source not in self.accepted_formats:
-            raise ValueError(f"Invalid source: '{self.source}'. Accepted sources are: {self.accepted_formats}")
+    def __validate_source(self):
+        if self.source not in self.accepted_sources:
+            raise ValueError(f"Invalid source: '{self.source}'. Accepted sources are: {self.accepted_sources}")
 
     def __get_web_data_as_text(self, url: str, response_timeout: int) -> HTML:
         driver = webdriver.Chrome()
