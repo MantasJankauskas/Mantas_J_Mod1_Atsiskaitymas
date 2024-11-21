@@ -23,7 +23,7 @@ def __get_web_data_as_text(url: str, response_timeout: int) -> HTML:
     return HTML(html_content)
 
 
-def __parse_eurovaistine_data(data: HTML) -> list[dict[str, str | bool]]:
+def __parse_eurovaistine_data(data: HTML) -> list[dict[str, bool]]:
     drugs_cards = data.xpath("//a[contains(@class, 'productCard')]")
 
     return [{
@@ -34,7 +34,7 @@ def __parse_eurovaistine_data(data: HTML) -> list[dict[str, str | bool]]:
     } for drug in drugs_cards]
 
 
-def __parse_apotheka_data(data: HTML):
+def __parse_apotheka_data(data: HTML) -> list[dict[str, bool]]:
     drugs_cards = data.xpath("//div[@class='box-product']")
 
     return [{
