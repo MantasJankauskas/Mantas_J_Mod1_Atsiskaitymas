@@ -3,6 +3,7 @@
 ![Python Unit Tests](https://github.com/MantasJankauskas/Mantas_J_Mod1_Atsiskaitymas/actions/workflows/python-tests.yml/badge.svg)
 ![PEP-8 Check](https://github.com/MantasJankauskas/Mantas_J_Mod1_Atsiskaitymas/actions/workflows/pep-8-check.yml/badge.svg)
 [![codecov](https://codecov.io/github/MantasJankauskas/Mantas_J_Mod1_Atsiskaitymas/graph/badge.svg?token=ONTZWROC07)](https://codecov.io/github/MantasJankauskas/Mantas_J_Mod1_Atsiskaitymas)
+[![PyPI version](https://img.shields.io/pypi/v/mantas-j-mod1-atsiskaitymas.svg)](https://pypi.org/project/mantas-j-mod1-atsiskaitymas/)
 
 This Python package retrieves and parses data from two websites, offering the results in various formats.
 
