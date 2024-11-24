@@ -65,7 +65,7 @@ class TestDataParser(unittest.TestCase):
             <div class="box-product">
                 <div class="box-product__title">Testing</div>
                 <div class="box-product__image"><img src="image_url.jpg"/></div>
-                <div class="discountContainer"><div class="discount">10</div></div>
+                <div class="special"><div class="product-pricing__price-number">10</div></div>
                 <span class="product-pricing__price-number">10,99 €</span>
             </div>
         </html>
