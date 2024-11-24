@@ -6,6 +6,11 @@ setup(
     author="",
     email="",
     packages=find_packages(),
-    install_requires=[],
+    install_requires=[
+        'lxml~=5.3.0',
+        'selenium~=4.26.1',
+        'pytest==8.3.3',
+        'pytest-cov==6.0.0'
+    ],
     python_requires=">=3.10"
 )
