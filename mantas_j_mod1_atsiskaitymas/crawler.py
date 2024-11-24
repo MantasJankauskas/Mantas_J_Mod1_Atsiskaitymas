@@ -14,11 +14,15 @@ class Crawl:
         match self.source:
             case 'eurovaistine':
                 response_data = self.__get_web_data_as_text(
-                    'https://www.eurovaistine.lt/vaistai-nereceptiniai', self.timeout)
+                    'https://www.eurovaistine.lt/vaistai-nereceptiniai',
+                    self.timeout
+                )
                 return self.__parse_eurovaistine_data(response_data)
             case 'apotheka':
                 response_data = self.__get_web_data_as_text(
-                    'https://www.apotheka.lt/prekes/nereceptiniai-vaistai', self.timeout)
+                    'https://www.apotheka.lt/prekes/nereceptiniai-vaistai',
+                    self.timeout
+                )
                 return self.__parse_apotheka_data(response_data)
 
     def __validate_source(self):
@@ -41,7 +45,6 @@ class Crawl:
         drugs_cards = data.xpath("//div[@class='box-product']")
         return [self.__process_apotheka_xpath(drug) for drug in drugs_cards]
 
-
     def __process_eurovaistine_xpath(self, data):
         image_url = None
         if len(data.xpath(".//div[contains(@class, 'image')]//img/@src")):
@@ -53,11 +56,11 @@ class Crawl:
         return {
             'title': ''.join(data.xpath(".//div[@class='title']/span/text()")).strip(),
             'img_url': image_url,
-            'discounted' :bool(
-                data.xpath(".//div[contains(@class, 'discountContainer')]//div[contains(@class, 'discount')]/text()")),
+            'discounted': bool(
+                data.xpath(".//div[contains(@class, 'discountContainer')]//div[contains(@class, 'discount')]/text()")
+            ),
             'price': formatted_price
         }
-
 
     def __process_apotheka_xpath(self, data):
         image_url = None
