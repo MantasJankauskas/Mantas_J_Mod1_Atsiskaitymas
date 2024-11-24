@@ -35,22 +35,43 @@ class Crawl:
 
     def __parse_eurovaistine_data(self, data: HTML) -> list[dict[str, bool]]:
         drugs_cards = data.xpath("//a[contains(@class, 'productCard')]")
-
-        return [{
-            'title': ''.join(drug.xpath(".//div[@class='title']/span/text()")).strip(),
-            'img_url': drug.xpath(".//div[contains(@class, 'image')]//img/@src")[0] if len(drug.xpath(".//div[contains(@class, 'image')]//img/@src"))  else None,
-            'discounted': bool(
-                drug.xpath(".//div[contains(@class, 'discountContainer')]//div[contains(@class, 'discount')]/text()")),
-            'price': ''.join(drug.xpath(".//div[contains(@class, 'productPrice')]/span/text()")).strip()[:-2]
-        } for drug in drugs_cards]
+        return [self.__process_eurovaistine_xpath(drug) for drug in drugs_cards]
 
     def __parse_apotheka_data(self, data: HTML) -> list[dict[str, bool]]:
         drugs_cards = data.xpath("//div[@class='box-product']")
+        return [self.__process_apotheka_xpath(drug) for drug in drugs_cards]
 
-        return [{
-            'title': ''.join(drug.xpath(".//div[@class='box-product__title']/text()")).strip(),
-            'img_url': drug.xpath(".//div[contains(@class, 'box-product__image')]//img/@src")[0] if len(drug.xpath(".//div[contains(@class, 'box-product__image')]//img/@src")) else None,
+
+    def __process_eurovaistine_xpath(self, data):
+        image_url = None
+        if len(data.xpath(".//div[contains(@class, 'image')]//img/@src")):
+            image_url = data.xpath(".//div[contains(@class, 'image')]//img/@src")[0]
+
+        price = ''.join(data.xpath(".//div[contains(@class, 'productPrice')]/span/text()")).strip()[:-2]
+        formatted_price = float(price.replace(',', '.'))
+
+        return {
+            'title': ''.join(data.xpath(".//div[@class='title']/span/text()")).strip(),
+            'img_url': image_url,
+            'discounted' :bool(
+                data.xpath(".//div[contains(@class, 'discountContainer')]//div[contains(@class, 'discount')]/text()")),
+            'price': formatted_price
+        }
+
+
+    def __process_apotheka_xpath(self, data):
+        image_url = None
+        if len(data.xpath(".//div[contains(@class, 'box-product__image')]//img/@src")):
+            image_url = data.xpath(".//div[contains(@class, 'box-product__image')]//img/@src")[0]
+
+        price = ''.join(data.xpath(".//span[@class='product-pricing__price-number']/text()")).strip()[:-2]
+        formatted_price = float(price.replace(',', '.'))
+
+        return {
+            'title': ''.join(data.xpath(".//div[@class='box-product__title']/text()")).strip(),
+            'img_url': image_url,
             'discounted': bool(
-                drug.xpath(".//div[contains(@class, 'discountContainer')]//div[contains(@class, 'discount')]/text()")),
-            'price': ''.join(drug.xpath(".//span[@class='product-pricing__price-number']/text()")).strip()[:-2]
-        } for drug in drugs_cards]
+                data.xpath(".//div[contains(@class, 'discountContainer')]//div[contains(@class, 'discount')]/text()")
+            ),
+            'price': formatted_price
+        }

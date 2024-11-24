@@ -52,7 +52,7 @@ class TestDataParser(unittest.TestCase):
             'title': 'Test',
             'img_url': 'image_url_a.jpg',
             'discounted': True,
-            'price': '10,99'
+            'price': 10.99
         }]
         self.assertEqual(data, expected_data)
 
@@ -77,6 +77,6 @@ class TestDataParser(unittest.TestCase):
             'title': 'Testing',
             'img_url': 'image_url.jpg',
             'discounted': True,
-            'price': '10,99'
+            'price': 10.99
         }]
         self.assertEqual(data, expected_data)
