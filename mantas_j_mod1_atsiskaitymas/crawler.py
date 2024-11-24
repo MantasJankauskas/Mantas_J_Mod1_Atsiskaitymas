@@ -71,7 +71,7 @@ class Crawl:
             'title': ''.join(data.xpath(".//div[@class='box-product__title']/text()")).strip(),
             'img_url': image_url,
             'discounted': bool(
-                data.xpath(".//div[contains(@class, 'discountContainer')]//div[contains(@class, 'discount')]/text()")
+                data.xpath(".//div[contains(@class, 'special')]//div[contains(@class, 'product-pricing__price-number')]/text()")
             ),
             'price': formatted_price
         }
