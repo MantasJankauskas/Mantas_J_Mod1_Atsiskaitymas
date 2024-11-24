@@ -22,8 +22,3 @@ jobs:
     - name: Run Tests with Coverage
       run: |
         pytest --cov=mantas_j_mod1_atsiskaitymas --cov-fail-under=80 --cov-report=xml
-    - name: Upload Coverage Report
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage-report
-        path: coverage.xml
