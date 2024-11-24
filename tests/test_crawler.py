@@ -13,7 +13,7 @@ class TestDataParser(unittest.TestCase):
         try:
             Crawl('eurovaistine')
             Crawl('apotheka')
-        except:
+        except ValueError:
             self.fail('An exception was raised.')
 
     @patch('mantas_j_mod1_atsiskaitymas.crawler.webdriver.Chrome')

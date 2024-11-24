@@ -15,7 +15,7 @@ class TestDataParser(unittest.TestCase):
             parser._DataParser__validate_format('json')
             parser._DataParser__validate_format('csv')
             parser._DataParser__validate_format('list')
-        except:
+        except ValueError:
             self.fail('An exception was raised.')
 
     def test_return_in_format_list(self):
