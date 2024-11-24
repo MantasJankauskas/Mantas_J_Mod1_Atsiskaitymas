@@ -38,7 +38,7 @@ class Crawl:
 
         return [{
             'title': ''.join(drug.xpath(".//div[@class='title']/span/text()")).strip(),
-            'img_url': drug.xpath(".//div[contains(@class, 'image')]//img/@src"),
+            'img_url': drug.xpath(".//div[contains(@class, 'image')]//img/@src")[0] if len(drug.xpath(".//div[contains(@class, 'image')]//img/@src"))  else None,
             'discounted': bool(
                 drug.xpath(".//div[contains(@class, 'discountContainer')]//div[contains(@class, 'discount')]/text()")),
             'price': ''.join(drug.xpath(".//div[contains(@class, 'productPrice')]/span/text()")).strip()[:-2]
@@ -49,7 +49,7 @@ class Crawl:
 
         return [{
             'title': ''.join(drug.xpath(".//div[@class='box-product__title']/text()")).strip(),
-            'img_url': drug.xpath(".//div[contains(@class, 'box-product__image')]//img/@src"),
+            'img_url': drug.xpath(".//div[contains(@class, 'box-product__image')]//img/@src")[0] if len(drug.xpath(".//div[contains(@class, 'box-product__image')]//img/@src")) else None,
             'discounted': bool(
                 drug.xpath(".//div[contains(@class, 'discountContainer')]//div[contains(@class, 'discount')]/text()")),
             'price': ''.join(drug.xpath(".//span[@class='product-pricing__price-number']/text()")).strip()[:-2]

@@ -50,7 +50,7 @@ class TestDataParser(unittest.TestCase):
         # Expected parsed data
         expected_data = [{
             'title': 'Test',
-            'img_url': ['image_url_a.jpg'],
+            'img_url': 'image_url_a.jpg',
             'discounted': True,
             'price': '10,99'
         }]
@@ -75,7 +75,7 @@ class TestDataParser(unittest.TestCase):
 
         expected_data = [{
             'title': 'Testing',
-            'img_url': ['image_url.jpg'],
+            'img_url': 'image_url.jpg',
             'discounted': True,
             'price': '10,99'
         }]
