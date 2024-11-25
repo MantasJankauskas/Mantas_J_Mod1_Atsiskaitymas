@@ -1,0 +1,35 @@
+name: Update Traffic Badges
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+jobs:
+  update-badges:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    - name: Fetch Traffic Stats
+      env:
+        GITHUB_TOKEN: ${{ secrets.GT_TOKEN }}
+      run: |
+        mkdir -p shields
+        # Fetch views
+        curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/${{ github.repository }}/traffic/views \
+        | jq '{ label: "views", message: (.count|tostring), color: "blue" }' > shields/views.json
+
+        # Fetch unique visitors
+        curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/${{ github.repository }}/traffic/views \
+        | jq '{ label: "unique visitors", message: (.uniques|tostring), color: "green" }' > shields/visitors.json
+
+        # Fetch clones
+        curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/${{ github.repository }}/traffic/clones \
+        | jq '{ label: "clones", message: (.count|tostring), color: "yellow" }' > shields/clones.json
+    - name: Commit Updated Badges
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add shields/*.json
+        git commit -m "Update traffic badge data"
+        git push
